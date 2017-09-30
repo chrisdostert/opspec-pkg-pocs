@@ -1,0 +1,36 @@
+name: d
+inputs:
+  name:
+    file:
+      default: /name.txt
+run:
+  serial:
+    - op:
+        pkg: { ref: d/i }
+        outputs: { dir }
+    - container:
+        image: { ref: alpine }
+        cmd:
+          - sh
+          - -ce
+          - |
+            echo $object
+            echo $array
+            echo $number
+
+            echo $(cat /scope-file-ref-with-path)
+            echo $(cat /array)
+
+            ls /scope-dir-ref-with-path
+        dirs:
+          /scope-dir-ref-with-path: $(dir/subdir)
+        envVars:
+          object: { of: my eye, arr: [hey, 2]}
+          array: [hello, 2]
+          number: 2.1
+        files:
+          /scope-file-ref-with-path: $(dir/name.txt)
+          /array: [hello: world]
+    - container:
+        image: { ref: alpine }
+        cmd: [echo, 2, [2, 3], {hey: there}]

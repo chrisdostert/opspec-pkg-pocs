@@ -1,0 +1,16 @@
+name: d/i
+outputs:
+  dir:
+    dir: {}
+run:
+  container:
+    image: { ref: alpine }
+    cmd:
+      - sh
+      - -ce
+      - |
+        cp -R /place/* /out
+        ls /out
+    dirs:
+      /place: /dir
+      /out: dir
