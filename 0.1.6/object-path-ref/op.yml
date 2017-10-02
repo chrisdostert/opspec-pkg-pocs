@@ -1,0 +1,21 @@
+name: object-path-ref
+inputs:
+  object:
+    object:
+      default:
+        parent:
+          string: child woooo!
+          number: 2.2
+          array: [2, apple]
+          object: { name: value}
+run:
+  container:
+    image: { ref: alpine }
+    cmd:
+      - sh
+      - -ce
+      - |
+        echo $(object.parent.string)
+        echo $(object.parent.number)
+        echo $(object.parent.array)
+        echo $(object.parent.object)

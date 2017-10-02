@@ -1,0 +1,15 @@
+name: dynamic-fs-ref
+inputs:
+  number:
+    number:
+      constraints: { enum: [1, 2] }
+run:
+  container:
+    image: { ref: alpine }
+    cmd:
+      - sh
+      - -ce
+      - |
+        cat /file && echo
+    files:
+      /file: $(/file$(number).txt)
